@@ -9,6 +9,8 @@
     }
   },
   "routes": [
+    { "src": "/", "dest": "/index.html" },
+    { "src": "/assets/(.*)", "dest": "/assets/$1" },
     { "src": "/stream-audio/(.*)", "dest": "api/index.py" },
     { "src": "/upload", "methods": ["POST"], "dest": "api/index.py" },
     { "src": "/session/(.*)", "dest": "api/index.py" },
