@@ -1,0 +1,19 @@
+{
+  "buildCommand": "cd frontend && npm install && npm run build",
+  "outputDirectory": "frontend/dist",
+  "installCommand": "pip install -r requirements.txt",
+  "functions": {
+    "api/index.py": {
+      "runtime": "python3.12",
+      "maxDuration": 30
+    }
+  },
+  "routes": [
+    { "src": "/stream-audio/(.*)", "dest": "api/index.py" },
+    { "src": "/upload", "methods": ["POST"], "dest": "api/index.py" },
+    { "src": "/session/(.*)", "dest": "api/index.py" },
+    { "src": "/mock-session/(.*)", "dest": "api/index.py" },
+    { "src": "/debug/(.*)", "dest": "api/index.py" },
+    { "src": "/(.*)", "dest": "/$1" }
+  ]
+}

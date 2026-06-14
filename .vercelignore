@@ -1,0 +1,8 @@
+.env
+.git
+node_modules
+__pycache__
+*.pyc
+sample.pdf
+uploaded_debug.pdf
+lumina-reader.apk
