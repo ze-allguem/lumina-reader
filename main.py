@@ -417,18 +417,14 @@ def clean_html_for_tts(html_text: str) -> str:
     text = re.sub(r'\n+', '\n', text)
     return text.strip()
 
-is_vercel = "VERCEL" in os.environ
-
 dist_path = Path(__file__).parent / "frontend" / "dist"
-use_dist = dist_path.exists() and not is_vercel
+use_dist = dist_path.exists()
 
 if use_dist:
     app.mount("/assets", StaticFiles(directory=dist_path / "assets"), name="assets")
 
 @app.get("/")
 async def serve_index():
-    if is_vercel and (Path(__file__).parent / "index.html").exists():
-        return FileResponse(Path(__file__).parent / "index.html")
     if use_dist and (dist_path / "index.html").exists():
         response = FileResponse(dist_path / "index.html")
     else:
@@ -740,7 +736,7 @@ async def stream_audio(session_id: str, block_index: int, voice: str = "pt-BR-Fr
             
     return StreamingResponse(edge_audio_generator(), media_type="audio/mpeg")
 
-# Catch-all para rotas não mapeadas da SPA React (quando o dist existir e não estiver no Vercel)
+# Catch-all para rotas não mapeadas da SPA React (quando o dist existir)
 if use_dist:
     @app.get("/{rest_of_path:path}")
     async def serve_all(rest_of_path: str):
